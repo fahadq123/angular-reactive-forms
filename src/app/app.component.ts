@@ -18,7 +18,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.signupForm = new FormGroup({
       formGroup: new FormGroup({
-        'username': new FormControl(null, Validators.required, this.forbiddenName.bind(this)),
+        'username': new FormControl(null,
+          Validators.required,
+          this.forbiddenName.bind(this)),
         'email': new FormControl(null, [
           Validators.required,
           Validators.email,
@@ -27,6 +29,11 @@ export class AppComponent implements OnInit {
       'gender': new FormControl('male'),
       'hobbies': new FormArray([])
     });
+
+    // Tracking the status changes of the username control
+    // this.signupForm.get(['username']).statusChanges.subscribe((status) => {
+    //   console.log('The status os username is: ' + status);
+    // });
   }
 
   onSubmit() {
@@ -68,6 +75,25 @@ export class AppComponent implements OnInit {
           resolve(null);
         }
       }, 2000);
+    })
+  }
+
+  onClear() {
+    this.signupForm.reset();
+  }
+
+  onGenerate() {
+    this.signupForm.setValue({
+      'formGroup': {
+        'username': 'Fahad',
+        'email': 'fahad@devPro.com'
+      },
+      'gender': 'male',
+      'hobbies': ['Table Tennis']
+    })
+
+    this.signupForm.patchValue({
+
     })
   }
 }

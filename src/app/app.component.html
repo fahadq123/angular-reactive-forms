@@ -62,8 +62,11 @@
           </label>
         </div>
         <span *ngIf="signupForm.invalid && signupForm.touched" class="help-block">Please enter valid form data</span>
-
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="btn-group">
+          <button (click)="onGenerate()" class="btn btn-success" type="submit">Generate</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button (click)="onClear()" class="btn btn-danger" type="submit">Clear</button>
+        </div>
       </form>
     </div>
   </div>
