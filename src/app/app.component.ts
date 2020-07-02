@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.signupForm = new FormGroup({
       formGroup: new FormGroup({
-        'username': new FormControl(null, Validators.required),
+        'username': new FormControl(null, Validators.required, this.forbiddenName.bind(this)),
         'email': new FormControl(null, [
           Validators.required,
           Validators.email,
@@ -52,5 +53,21 @@ export class AppComponent implements OnInit {
       // it should not return false, should return null or nothing in case validator is false
       return null;
     }
+  }
+
+  // Custom async validator
+  // Ideally the validation should not be done at the front end and hence we need to reach out a web server
+  // Web server is an async call therefore this is async custom validator example.
+  // With this the control state switches from invalid --> pending --> response from server either valid or invalid.
+  forbiddenName(control: FormControl): Promise<any> | Observable<any> {
+    return new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === 'Fahad' || control.value === 'fahad') {
+          resolve({'nameIsForbidden': true});
+        } else {
+          resolve(null);
+        }
+      }, 2000);
+    })
   }
 }
