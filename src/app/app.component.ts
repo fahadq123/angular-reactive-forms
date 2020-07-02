@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
   ];
 
   ngOnInit() {
+    // if the validator is an async then it is the third argument else
+    // if its not then it should be part of the second argument array
     this.signupForm = new FormGroup({
       formGroup: new FormGroup({
         'username': new FormControl(null,
@@ -90,10 +92,13 @@ export class AppComponent implements OnInit {
       },
       'gender': 'male',
       'hobbies': ['Table Tennis']
-    })
+    });
 
-    this.signupForm.patchValue({
-
-    })
+    // Patch value can also be used in this way
+    // this.signupForm.patchValue({
+    //   'formGroup': {
+    //     'username': 'test user name'
+    //   }
+    // });
   }
 }
